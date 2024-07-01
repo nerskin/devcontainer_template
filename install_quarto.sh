@@ -14,6 +14,6 @@ fi
 
 
 TEMP_QUARTO="$(mktemp)" && \
-    wget  -O "$TEMP_QUARTO" https://github.com/quarto-dev/quarto-cli/releases/download/v$QUARTO_VERSION/quarto-${QUARTO_VERSION}-linux-${CPU}.deb && \
+    wget -nv -O "$TEMP_QUARTO" https://github.com/quarto-dev/quarto-cli/releases/download/v$QUARTO_VERSION/quarto-${QUARTO_VERSION}-linux-${CPU}.deb && \
     sudo dpkg -i "$TEMP_QUARTO" && \
     rm -f "$TEMP_QUARTO"
