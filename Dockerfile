@@ -1,25 +1,31 @@
-FROM rocker/r-ver:4.4
+FROM fedora:latest
 
-ARG QUART0_VER="1.4.554"
-
-RUN apt update
-RUN apt install -y git vim libcurl4-openssl-dev
-
-RUN apt install -y python3 python3-pip
+RUN dnf install -y git vim libcurl-devel R python3-pip python3-devel
 
 RUN mkdir settings
-RUN apt install -y wget sudo #used in the install_quarto script
-COPY setup_julia.jl install_quarto.sh install_cmdstanr.R cran_packages.csv install_cran_packages.R requirements.txt ./settings/
-RUN bash ./settings/install_quarto.sh 1.4.554
+
+COPY install_cran_packages.R cran_packages.csv ./settings/
 RUN Rscript ./settings/install_cran_packages.R
+
+ARG QUARTO_VER="1.5.53"
+COPY install_quarto.R ./settings/
+RUN Rscript ./settings/install_quarto.R "${QUARTO_VER}"
+
+COPY install_latex.R ./settings/
+RUN Rscript ./settings/install_latex.R
+
+COPY install_cmdstanr.R ./settings/
 RUN Rscript ./settings/install_cmdstanr.R
-RUN pip install -r ./settings/requirements.txt
 
-RUN quarto install --quiet tinytex
+COPY requirements.txt ./settings/
+RUN pip3 install -r ./settings/requirements.txt
 
-RUN apt install -y cargo
+
+COPY setup_julia.jl ./settings/
+RUN dnf install -y cargo
 RUN cargo install juliaup
-RUN echo "export PATH=\$PATH:/root/.cargo/bin" >> ~/.bashrc 
+RUN echo "test"
+ENV PATH="$PATH:/root/.cargo/bin"
+RUN echo $PATH
 RUN /root/.cargo/bin/julia --version #make sure the setup completes 
-
 RUN /root/.cargo/bin/julia ./settings/setup_julia.jl

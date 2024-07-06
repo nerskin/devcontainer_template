@@ -1,13 +1,3 @@
 package
+glue
 tidyverse
-languageserver
-httpgd
-sf
-ggmap
-tidygeocoder
-palmerpenguins
-reticulate
-tsibble
-patchwork
-nanoparquet
-gt

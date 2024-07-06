@@ -1,4 +1,2 @@
-library(remotes)
-
-remotes::install_github('stan-dev/cmdstanr')
+pak::pkg_install('stan-dev/cmdstanr')
 cmdstanr::install_cmdstan()

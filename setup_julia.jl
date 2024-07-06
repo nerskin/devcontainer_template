@@ -1,3 +1,3 @@
 using Pkg
-packages = ["IJulia","Gadfly","RDatasets","StateSpaceModels","GLM","Plots","MultivariateStats","Lasso"]
+packages = ["IJulia","Gadfly","MultivariateStats"]
 Pkg.add(packages)

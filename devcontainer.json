@@ -1,6 +1,6 @@
 {
 	"name":"R basic",
-	"build":{"dockerfile":"Dockerfile"},
+	"build":{"dockerfile":"Dockerfile",
 	"customizations": {
         "vscode": {
             "extensions": [
